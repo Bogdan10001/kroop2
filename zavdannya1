@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+
+class IPrintable {
+public:
+    virtual void print() = 0;
+
+    // ДОДАНО: Віртуальний деструктор
+    virtual ~IPrintable() {}
+};
+
+class Document : public IPrintable {
+public:
+    void print() override { cout << "Printing document" << endl; }
+
+    // Для наочності додамо деструктор, щоб бачити, що він викликається
+    ~Document() { cout << "Document deleted correctly" << endl; }
+};
+
+int main() {
+    IPrintable* doc = new Document();
+    doc->print();
+
+    // Тепер це безпечно: викликається ~Document(), а потім ~IPrintable()
+    delete doc;
+
+    return 0;
+}
